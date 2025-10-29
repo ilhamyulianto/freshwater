@@ -26,4 +26,7 @@ This ensures greater flexibility in decision-making compared to conventional sta
 The relationships between tank capacity, cargo load, ship draft limits, and water costs are non-linear, making it difficult to optimize using traditional methods.
 PSO effectively handles these complex, non-linear interactions, producing accurate and fast optimization results compared to brute-force search methods.
 
-PSO plays a crucial role in determining the most optimal freshwater refill locations based on the lowest costs and operational constraints. By applying PSO, ships can reduce freshwater refilling costs, avoid inefficient full tank refills at the start of the journey, and maintain optimal load balancing throughout the voyage.
+PSO plays a crucial role in determining the most optimal freshwater refill locations based on the lowest costs and operational constraints. By applying PSO, ships can reduce freshwater refilling costs, avoid inefficient full tank refills at the start of the journey.
+
+## Research Flows:
+
