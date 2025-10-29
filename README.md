@@ -29,4 +29,12 @@ PSO effectively handles these complex, non-linear interactions, producing accura
 PSO plays a crucial role in determining the most optimal freshwater refill locations based on the lowest costs and operational constraints. By applying PSO, ships can reduce freshwater refilling costs, avoid inefficient full tank refills at the start of the journey.
 
 ## Research Flows:
+![image alt](https://github.com/ilhamyulianto/freshwater/blob/main/image/flows-fw2.png)
+he  process  begins  with  the collection of operational ship data, the dataset includes:
+1. Voyage details: port sequences and trip segments.
+2. Ship specifications: tank capacity, gross tonnage, and deadweight tonnage.
+3. Distance data: nautical miles between each port pair.
+4. Freshwater consumption: historical usage in liters per route.
+5. Freshwater price: port-specific cost per liter across 38 Indonesian ports.
 
+Following this, a data preprocessing phase is conducted, where categorical variables such as ship routes are transformed  using  one-hot encoding,  and  numerical  features  are  standardized  where  appropriate. The cleaned  data  is  then  split  into  training  and  testing  sets  for  the  development  of  the  XGBoost  regression model,  which  predicts  freshwater  consumption  based  on  voyage  distance.  The  output  from  this  model serves  as  input  for  the  Particle  Swarm  Optimization  (PSO)  algorithm,  which  determines  the  optimal freshwater refill points and quantities by minimizing total cost while satisfying operational constraints, the tank capacity. Model  evaluation and analysis are  using MSE and RMSE for both models (XGBoost and PSO) performed to assess prediction accuracy and quantify cost savings achieved through the optimized refilling strategy.
