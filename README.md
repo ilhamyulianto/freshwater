@@ -1,5 +1,7 @@
-# Cargo ship's freshwater filling optimization based on water (air tawar) price using XGBoost and PSO.
-Streamlit app is live! on https://freshwater.streamlit.app/
+# Freshwater Filling Optimization Based on Price Using XGBoost and Particle Swarm Optimization
+Published as research paper on Scientific Journal of Informatics (SINTA 2 Accredited Journal) 
+https://doi.org/10.15294/sji.v12i2.24988
+
 
 ## Why XGBoost?
 based on several research papers, compared to several methods for predictive purposes, can be concluded that XGBoost is often a better choice for predicting freshwater needs (or similar cases) compared to other due to several key advantages. First, XGBoost excels at capturing non-linear relationships between features and the target variable. Unlike, for example, Linear Regression, which assumes a strictly linear correlation between distance and freshwater consumption, XGBoost can model complex interactions that may involve factors such as weather conditions, crew size, and engine efficiency. While KNN also can handle non-linearity to some extent, its effectiveness heavily depends on the chosen number of neighbors (k) and can become computationally expensive for large datasets.
