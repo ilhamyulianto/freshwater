@@ -1,3 +1,7 @@
+import pandas as pd
+import xgboost as xgb
+
+
 def get_capacity(df, ship):
     capacity = df[df["ship"] == ship]["tank_capacity"].to_list()
     return capacity
@@ -33,10 +37,25 @@ def get_distances(df, trips):
     return distance
 
 
-def predict_freshwater(distances, scaler, model):
-    distance_scaled = scaler.transform(distances)
-    fwneeds = []
-    for item in distance_scaled:
-        fw = model.predict(item.reshape(1, -1))
-        fwneeds.append(int(fw[0]))
+def predict_freshwater(distances, model_columns, model):
+    # Convert to numeric list
+    numeric_distances = [int(d[0]) for d in distances]  # assuming d = ['450']
+    
+    # Build base DataFrame
+    test_df = pd.DataFrame({'DISTANCE': numeric_distances})
+    
+    # Add missing one-hot encoded columns as 0
+    for col in model_columns:
+        if col != 'DISTANCE':
+            test_df[col] = 0
+
+    # Reorder to match training
+    test_df = test_df[model_columns]
+
+    # Convert to DMatrix and predict
+    dmatrix_test = xgb.DMatrix(test_df)
+    predictions = model.predict(dmatrix_test)
+
+    # Round to int, return list + sum
+    fwneeds = [int(pred) for pred in predictions]
     return fwneeds, sum(fwneeds)

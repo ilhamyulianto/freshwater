@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 import locale
+import json
+import xgboost as xgb
 
 from utils.dataframe import df_ship, df_ship_distance, df_asj, df_ren, df_aka, df_fwcost
 from utils.function import (
@@ -14,8 +16,9 @@ from utils.function import (
 )
 from utils.PSO import particle_swarm_optimization as pso
 
-model = joblib.load("./models/model.pkl")
-scaler = joblib.load("./models/scaler.pkl")
+model = joblib.load("notebook/xgb_modeljson.pkl")
+with open("notebook/xgb_columns.json") as f:
+    model_columns = json.load(f)
 locale.setlocale(locale.LC_ALL, "")
 
 st.set_page_config(
@@ -81,7 +84,7 @@ trips = trips_list[0].split(";")
 if submit_button:
     # Ambil data untuk FW Prediction
     distance_list = get_distances(df_ship_distance, trips)
-    freshwater_needs, freshwater_sum = predict_freshwater(distance_list, scaler, model)
+    freshwater_needs, freshwater_sum = predict_freshwater(distance_list, model_columns, model)
     distances = [int(item[0]) for item in distance_list]
 
     df_freshwater = pd.DataFrame(

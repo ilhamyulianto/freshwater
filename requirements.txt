@@ -4,4 +4,8 @@ openpyxl==3.1.2
 pandas==2.2.2
 scikit_learn==1.4.2
 streamlit==1.35.0
-streamlit_navigation_bar==3.3.0
+tensorflow==2.16.1
+xgboost==2.1.4
+seaborn==0.13.2
+matplotlib
+matplotlib.pyplot

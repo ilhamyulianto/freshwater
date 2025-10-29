@@ -1,0 +1,75 @@
+import pandas as pd
+
+# Initialize starting values
+years = list(range(2025, 2041))
+revenue = [24]  # in billions USD
+operating_cost = [20]  # in billions USD
+net_income = []  # in billions USD
+profit_distribution = []  # 30% of net income
+
+# Growth rates
+revenue_growth = 0.18  # 18% YoY
+cost_growth = 0.12     # 12% YoY
+
+# Distribution rule
+distribution_ratio = 0.30  # 30% of net income goes to investors
+
+# Shareholders' percentages
+source_a_pct = 0.10
+source_b_pct = 0.23
+source_c_pct = 0.49
+
+# Track cumulative payouts for each source
+source_a_cumulative = 0
+source_b_cumulative = 0
+source_c_cumulative = 0
+
+# Caps
+source_a_cap = 0.1 * 100  # $0.1B * 100x = $10B
+source_b_cap = 7 * 100    # $7B * 100x = $700B
+source_c_cap = 35 * 100   # $35B * 100x = $3.5T
+
+# Distribution trackers
+payouts = []
+
+for year in years:
+    # Calculate revenue and cost for the year
+    if year != 2025:
+        revenue.append(revenue[-1] * (1 + revenue_growth))
+        operating_cost.append(operating_cost[-1] * (1 + cost_growth))
+    
+    income = revenue[-1] - operating_cost[-1]
+    net_income.append(income)
+    
+    dist = max(income * distribution_ratio, 0)
+    profit_distribution.append(dist)
+
+    # Distribute according to ownership and cap limits
+    a_share = min(dist * source_a_pct, source_a_cap - source_a_cumulative)
+    b_share = min(dist * source_b_pct, source_b_cap - source_b_cumulative)
+    c_share = min(dist * source_c_pct, source_c_cap - source_c_cumulative)
+
+    # Update cumulative
+    source_a_cumulative += a_share
+    source_b_cumulative += b_share
+    source_c_cumulative += c_share
+
+    # Record the payouts
+    payouts.append({
+        "Year": year,
+        "Revenue (B)": revenue[-1],
+        "Operating Cost (B)": operating_cost[-1],
+        "Net Income (B)": income,
+        "Profit Distributed (B)": dist,
+        "A Payout (B)": a_share,
+        "B Payout (B)": b_share,
+        "C Payout (B)": c_share,
+        "A Cumulative (B)": source_a_cumulative,
+        "B Cumulative (B)": source_b_cumulative,
+        "C Cumulative (B)": source_c_cumulative,
+    })
+
+# Convert to DataFrame for display
+df = pd.DataFrame(payouts)
+df.set_index("Year", inplace=True)
+print(df.round(2).tail(5))  # Show last 5 years
